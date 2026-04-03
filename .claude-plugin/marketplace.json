@@ -1,0 +1,16 @@
+{
+  "name": "junhan-skills",
+  "owner": {
+    "name": "Junhan Lee (James Lee)",
+    "email": "junhanlee91@gmail.com"
+  },
+  "description": "Curated Claude Code skills by junhan of select.codes",
+  "homepage": "https://github.com/Junhan2/skill",
+  "plugins": [
+    {
+      "name": "anything-uxui",
+      "source": "./",
+      "description": "Comprehensive UIUX design principles — 248 rules across 21 categories for building world-class web interfaces"
+    }
+  ]
+}
