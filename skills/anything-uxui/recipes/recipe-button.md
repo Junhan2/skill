@@ -4,13 +4,13 @@ tags: recipe, react, button
 ---
 # Recipe — Button
 
-Encodes in one transform: `component-active-scale`, `easing-custom-curves`, `a11y-target-size-24`, `state-focus-indicator-wcag`, `perf-transform-opacity-only`, no hover-grow, reduced-motion.
+Encodes in one transform: `component-active-scale`, `easing-custom-curves`, `a11y-target-size-24`, `state-focus-indicator-wcag`, `perf-transform-opacity-only`, `component-no-hover-grow`, reduced-motion.
 
 ## ❌ Before (5 findings)
 ```tsx
 import { motion } from 'framer-motion'   // perf-motion-hw → 'motion/react'
 <motion.button
-  whileHover={{ scale: 1.05 }}           // hover-grow banned
+  whileHover={{ scale: 1.05 }}           // component-no-hover-grow
   style={{ transition: 'all .3s' }}      // transition:all + >300ms
 >Save</motion.button>
 // + no press feedback, no focus ring, no min target

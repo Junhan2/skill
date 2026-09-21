@@ -55,7 +55,7 @@ Flag these on sight, hard:
 - Missing `prefers-reduced-motion` handling on movement
 - Ungated `:hover` motion
 - Symmetric enter/exit timing on a press-and-release or hold interaction
-- Everything-at-once entrance where a 30–80ms stagger belongs
+- Everything-at-once entrance where a stagger belongs (per-item delay by item count: → `timing-stagger-adaptive`)
 
 ---
 
@@ -118,7 +118,7 @@ A fast verification pass. Use after the methodology above, or standalone for a q
 ### Animation Timing
 - [ ] All user-triggered animations ≤ 300ms
 - [ ] Exit animations shorter than entrance (~60% duration)
-- [ ] No animation on keyboard-triggered actions (0ms)
+- [ ] No animation on high-frequency keyboard actions (shortcuts, command palette, focus moves; 0ms)
 - [ ] Duration matches tier: micro 60-120, short 120-200, medium 200-300
 - [ ] Context menus: no entrance animation, exit only
 
@@ -153,7 +153,7 @@ A fast verification pass. Use after the methodology above, or standalone for a q
 
 ### Performance
 - [ ] Only `transform` and `opacity` animated (no height/width/margin/padding)
-- [ ] Motion uses full `transform` string (not x/y shorthand) for hardware acceleration under load
+- [ ] On busy screens, Motion uses the full `transform` string (not x/y shorthand) for hardware acceleration; shorthand stays where it composes with `layout`/drag (→ `perf-motion-hw`)
 - [ ] CSS variables not updated on parents with many children
 - [ ] `box-shadow` animated via pseudo-element opacity
 - [ ] `filter: blur()` kept under 20px
@@ -212,6 +212,6 @@ Review animations the next day. Imperfections missed during development become o
 | Element "pops" into existence | scale(0) or no opacity transition | Start from scale(0.95) + opacity: 0 |
 | Hover sticks on mobile | Missing hover media query | Add `@media (hover: hover)` gate |
 | Animation janks on page load | JS animation on main thread | Switch to CSS animation or WAAPI |
-| Stagger feels slow | Per-item delay too high | Reduce to ≤40ms, check total ≤400ms |
+| Stagger feels slow | Per-item delay too high | Drop to the delay for that item count (≤60ms for 1-5, 40ms for 6-10, 30ms for 11+), total ≤400ms (→ `timing-stagger-adaptive`) |
 | Exit leaves ghost element | Missing AnimatePresence | Wrap conditional in AnimatePresence |
 | Popover grows from center | Default transform-origin | Set to trigger position |

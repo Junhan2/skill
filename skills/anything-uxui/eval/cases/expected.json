@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-09-21",
+  "note": "Answer key for the anything-uxui eval harness. Every rule-id below exists verbatim as a heading in skills/anything-uxui/references/. Fixtures deliberately carry no rule-ids in their comments: naming the answer inside the fixture would contaminate the run.",
+  "scoring": {
+    "hit": "The expected rule-id string appears verbatim in the audit output.",
+    "verdict": "The audit closes with the expected Block or Approve.",
+    "pass": "≥ 90% of expected rule-ids hit across all cases, every verdict correct, and no fix that breaks the component.",
+    "extraFindings": "Additional rule-ids beyond the expected list are not counted as misses. On the control they are only acceptable while the verdict stays Approve."
+  },
+  "cases": [
+    {
+      "file": "broken-button.tsx",
+      "verdict": "Block",
+      "expectedRuleIds": [
+        "component-active-scale",
+        "easing-no-ease-in",
+        "a11y-target-size-24",
+        "perf-transform-opacity-only",
+        "perf-motion-hw",
+        "component-no-hover-grow"
+      ],
+      "addedIn": {
+        "component-no-hover-grow": "3.1.0. The rule did not exist in 3.0.0, so the 3.0.0 baseline was scored over the other five ids only. The fixture has carried the hover scale-up since it was written (line 56, whileHover scale 1.05) and was not changed for this."
+      },
+      "breakage": "framer-motion import, transition: all 300ms ease-in, no :active rule, 16px icon button, hover scale-up on a frequently pressed button"
+    },
+    {
+      "file": "broken-loading-state.tsx",
+      "verdict": "Block",
+      "expectedRuleIds": [
+        "state-loading-aria-busy",
+        "state-indicator-threshold",
+        "state-skeleton-mirrors-layout"
+      ],
+      "breakage": "live region mounted together with its content, indicator shown with no delay window on a ~200ms fetch, 3 flat bars standing in for 64px avatar rows"
+    },
+    {
+      "file": "slop-landing.tsx",
+      "verdict": "Block",
+      "expectedRuleIds": [
+        "distinct-no-default-font",
+        "distinct-no-slop-palette",
+        "distinct-break-scaffold",
+        "distinct-emoji-not-icons"
+      ],
+      "breakage": "Inter, blue-to-purple gradient on hero text and CTA, emoji atop three identical cards, badge plus centered hero scaffold"
+    },
+    {
+      "file": "drag-only-list.tsx",
+      "verdict": "Block",
+      "expectedRuleIds": [
+        "gesture-non-drag-alternative"
+      ],
+      "breakage": "reorder reachable only by dragging: no move buttons, no keyboard path, no overflow menu"
+    },
+    {
+      "file": "optimistic-delete-no-undo.tsx",
+      "verdict": "Block",
+      "expectedRuleIds": [
+        "state-optimistic-limits"
+      ],
+      "breakage": "useOptimistic on a destructive invoice delete with no undo, no pending cue, and a silent rollback"
+    },
+    {
+      "file": "clean-button.tsx",
+      "verdict": "Approve",
+      "expectedRuleIds": [],
+      "breakage": "none: this is the false-positive control. It encodes component-active-scale, easing-custom-curves, a11y-target-size-24, perf-transform-opacity-only, a gated hover and a reduced-motion fallback."
+    }
+  ],
+  "workflows": {
+    "note": "Fixtures for the three workflows added in 3.1.0. These are not run by the 3.0.0 baseline: the commands do not exist yet.",
+    "find-motion": {
+      "command": "/anything-uxui:find-motion",
+      "target": "find-motion-app/",
+      "expectSuggested": [
+        {
+          "surface": "Toolbar.tsx .toolbar__button",
+          "why": "a pressable element with hover and focus styling but no press feedback"
+        },
+        {
+          "surface": "TrialBanner.tsx conditional render",
+          "why": "an occasionally-seen surface that currently appears with a hard cut"
+        }
+      ],
+      "expectRejected": [
+        {
+          "surface": "CommandPalette.tsx",
+          "requiredReason": "frequency",
+          "why": "opened with Cmd+K many times a day, so the gate must reject it on frequency and its keyboard trigger, and it must appear in the rejected-candidates section rather than being silently dropped"
+        }
+      ],
+      "maxSuggestions": 7,
+      "expectFilesModified": 0
+    },
+    "animate": {
+      "command": "/anything-uxui:animate",
+      "request": "add an open/close animation to the command palette",
+      "target": "find-motion-app/CommandPalette.tsx",
+      "expectAnimationLinesWritten": 0,
+      "expectGateRejection": true,
+      "requiredReasonKeywords": [
+        "frequency",
+        "keyboard"
+      ],
+      "why": "the correct answer is to build nothing: the palette is a high-frequency keyboard-triggered surface, so the gate must stop before any code is written"
+    },
+    "plan": {
+      "command": "/anything-uxui:plan",
+      "target": ".",
+      "targetNote": "the folder holding the 6 audit cases",
+      "expectPlanFiles": "plans/NNN-*.md",
+      "eachPlanFileContains": [
+        "a file:line reference",
+        "a commit marker"
+      ],
+      "expectCaseSourcesModified": 0,
+      "verifyWith": "git status --short -- skills/anything-uxui/eval/cases",
+      "motionPlansAlsoContain": [
+        "an exact cubic-bezier (literal, or a token whose literal is defined in a plan it declares as a dependency)",
+        "a duration in ms"
+      ]
+    }
+  }
+}

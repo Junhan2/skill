@@ -37,6 +37,34 @@ Add `transform: scale(0.97)` on `:active`. Provides instant feedback that makes 
 
 ---
 
+## component-no-hover-grow: No hover scale-up on frequently touched elements
+
+A hover scale-up reads as the element rising toward the pointer. On anything touched dozens of times a day (buttons, list rows, nav items) it turns ordinary pointer travel into constant motion, and the cursor never rests. Give those elements a non-moving hover signal and keep scale for the press state.
+
+```css
+/* ❌ Button grows under the pointer */
+.button:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ Non-moving hover feedback, scale reserved for the press */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { background-color: var(--surface-2); }
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+```
+
+### When to apply
+- No hover scale-up on frequently touched elements: buttons, list and table rows, nav items, tabs, toolbar icons
+- Allowed on rarely visited cards and media tiles (gallery item, marketing card), where a small lift reads as an invitation rather than noise
+- Gate every hover effect behind `@media (hover: hover) and (pointer: fine)` so touch devices never inherit a stuck hover state
+- Hover is never the only signal: keyboard users need the same state on `:focus-visible`
+
+---
+
 ## component-no-scale-zero: Never enter from scale(0)
 
 Nothing in the real world vanishes completely and reappears. Elements animating from `scale(0)` look like they materialized out of nowhere.
@@ -55,7 +83,7 @@ Nothing in the real world vanishes completely and reappears. Elements animating 
 ```
 
 ### When to apply
-- Start from `scale(0.9)` or higher, **combined with opacity**
+- Start from `scale(0.95)` or higher, **combined with opacity**
 - Even the smallest initial scale makes entry feel natural -- a deflated balloon still has a visible shape
 - Apply to all entry animations
 

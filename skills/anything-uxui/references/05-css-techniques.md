@@ -667,7 +667,7 @@ navigation.addEventListener('navigate', (e) => {
 });
 ```
 
-Always add `@media (prefers-reduced-motion: reduce) { ::view-transition-group(*) { animation: none } }`.
+Always add `@media (prefers-reduced-motion: reduce) { ::view-transition-group(*) { animation: none } }`. Zeroing is correct here even though the general policy is to reduce rather than remove (→ `14-accessibility`): a page or view transition is positional movement and nothing else, so once the movement goes there is nothing left to soften.
 
 **When to apply**: Route/view transitions where content loads async and you'd otherwise show a spinner.
 

@@ -6,13 +6,16 @@ tags: diagnosis, audit, entry, lookup, triage
 
 # Diagnosis Map — Symptom → Rule → Fix
 
-**The entry point for fixing bad UI.** Scan the symptom column, jump to the rule-ids, apply the fix. This turns ~290 scattered rules into "symptom → cure" — the difference between a library and a doctor. Load a referenced category only when a symptom matches (progressive disclosure).
+**The entry point for fixing bad UI.** Scan the symptom column, jump to the rule-ids, apply the fix. This turns ~300 scattered rules into "symptom → cure" — the difference between a library and a doctor. Load a referenced category only when a symptom matches (progressive disclosure).
 By junhan of select.codes.
 
-## Three workflows
+## Six workflows
 - **Audit** (`/anything-uxui:audit <path|diff>`): scan target → findings table (Before/After/Why + `file:line` + rule-id) grouped by `15`'s impact tiers → **Block/Approve verdict**. Read-only.
 - **Fix** (`/anything-uxui:fix <path>`): audit, then apply the remedial hierarchy (`delete > reduce > fix-easing > fix-origin > interruptible > GPU > asymmetric > polish > a11y`). Show the diff; re-audit to prove Block→Approve.
 - **Design new** (`/anything-uxui:design <brief>`): load `23-distinctive-design` + tokens (`18/19`) + component patterns (`04/17`) FIRST, then build to spec so the output isn't slop by construction.
+- **Find motion** (`/anything-uxui:find-motion <path>`): nothing is broken, something should move and doesn't, or "make it feel more alive". Sweep, gate every candidate, report suggestions plus rejected candidates. Read-only. Procedure: `workflows/find-motion.md`.
+- **Animate** (`/anything-uxui:animate <component>`): add motion to an existing component. Gate first (the answer may be zero lines), then copy values from `26-motion-spec`. Procedure: `workflows/animate.md`. Finish with Audit.
+- **Plan** (`/anything-uxui:plan <path|group>`): whole-app survey across the four symptom groups below, or a plan someone else will execute. Writes only into `plans/`. Procedure: `workflows/plan.md`.
 
 ---
 
@@ -36,6 +39,7 @@ By junhan of select.codes.
 | drag/swipe with no non-drag path | `gesture-non-drag-alternative` | pair a button (WCAG 2.5.7) |
 | target < 24px | `a11y-target-size-24` | 24 floor / 44–48 touch |
 | hover-only reveal on touch | `a11y-touch-hover-gate` | `@media (hover:hover)` |
+| hover scale-up (`:hover` / `whileHover` scale) on buttons, rows, nav | `component-no-hover-grow` | non-moving hover signal; keep scale for `:active` |
 | JS backdrop-click dismiss | `dialog-invoker-commands`, `popover-api-native` | `closedby` / `command` |
 | laggy click / typing | `perf-inp-under-200ms` | yield; defer; break long tasks |
 | SPA route change silent to screen readers | `state-spa-route-focus`, `state-skip-link` | focus h1/main + title |

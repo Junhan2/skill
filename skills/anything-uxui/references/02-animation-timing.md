@@ -24,7 +24,7 @@ Before writing animation code, answer these questions in order.
 | Occasional (modals, drawers, toasts) | Standard animation |
 | Rare or first-time (onboarding, celebrations) | Delight allowed |
 
-**Keyboard-triggered actions must never animate.** They repeat hundreds of times daily. Animation feels slow and disconnected.
+**Keyboard-triggered actions must never animate.** They repeat hundreds of times daily. Animation feels slow and disconnected. Scope this to high-frequency keyboard actions (shortcuts, command palette toggle, focus moves, anything a user performs 100+ times a day); a modal that happens to be opened with Enter is not in scope, because frequency decides, not the input device.
 
 ### Expanded "No Animation" Criteria
 
@@ -57,9 +57,9 @@ If the purpose is just "looks cool" and the user sees it often — don't animate
 |------|-------|-----------|
 | **Micro** | 60–120ms | Color change, opacity fade, focus ring |
 | **Short** | 120–200ms | Button press, hover feedback, tooltip, toggle |
-| **Medium** | 200–300ms | Modal entrance, dropdown open, slide-in panel |
-| **Max** | 300ms | Hard cap for all user-triggered animations |
-| **Decorative** | 300–500ms | Drawer, page transition, onboarding (non-blocking only) |
+| **Medium** | 200–300ms | Modal entrance, slide-in panel |
+| **Max** | 300ms | Hard cap for all user-triggered animations (named exceptions below) |
+| **Decorative** | 300–500ms | Drawer/sheet (≤500ms, `--ease-drawer`), toast (≤400ms), page transition, onboarding (non-blocking only) |
 
 ```css
 :root {
@@ -70,6 +70,8 @@ If the purpose is just "looks cool" and the user sees it often — don't animate
 }
 ```
 
+Some components have a value rather than a tier: dropdown and popover open in **150–250ms**, which straddles Short and Medium. Take per-component values from `26-motion-spec` instead of reading them off this table.
+
 ### timing-300ms-cap — All user-triggered animations ≤ 300ms
 
 ```css
@@ -79,6 +81,16 @@ If the purpose is just "looks cool" and the user sees it often — don't animate
 /* ✅ Within cap */
 .dropdown { transition: transform 200ms; }
 ```
+
+**Named exceptions.** Three cases may cross the cap, and only for the property that carries the panel itself:
+
+| Exception | Ceiling | Easing | Source |
+|---|---|---|---|
+| Drawer / sheet | 500ms | `var(--ease-drawer)` | `component-drawer-scaled-background` |
+| Toast | 400ms | `ease` | `component-starting-style` |
+| Non-blocking decorative motion (page transition, onboarding) | 500ms | context-dependent | Decorative tier above |
+
+Everything else over 300ms is a finding. Exits stay at roughly 60% of the entrance even inside an exception (→ `timing-exit-faster`).
 
 ### timing-exit-faster — Exit animations shorter than entrance
 
