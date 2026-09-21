@@ -7,7 +7,9 @@ description: |
   interactions, state handling (loading/empty/error/pending), visual design,
   typography, color systems, forms, dialogs, keyboard navigation, audio feedback,
   or accessibility — or when the output looks generic/AI-made.
-  Covers 24 categories / ~290 actionable rules + a symptom→rule diagnosis map.
+  Covers 24 categories / ~300 actionable rules + a symptom→rule diagnosis map,
+  plus workflows to find where motion is missing, add motion to a component,
+  and write hand-off plans for a whole codebase.
 
   Also trigger when: setting up design tokens, implementing dark mode, creating
   design system foundations, building responsive layouts, or auditing accessibility.
@@ -22,7 +24,7 @@ license: MIT
 metadata:
   author: junhan
   organization: select.codes
-  version: "3.0.0"
+  version: "3.1.0"
 ---
 
 # anything-uxui — Web Interface Design Standards
@@ -49,42 +51,42 @@ Three beliefs that govern every rule in this system:
 | # | Category | Impact | Rules | Reference |
 |---|----------|--------|-------|-----------|
 | 01 | [Design Philosophy](references/01-philosophy.md) | CRITICAL | 12 | Taste, invisible details, component principles |
-| 02 | [Animation Timing & Easing](references/02-animation-timing.md) | CRITICAL | 14 | Duration tiers, easing selection, stagger, perceived speed |
-| 03 | [Spring Physics](references/03-spring-physics.md) | HIGH | 8 | Spring params, mouse tracking, interruptibility |
-| 04 | [Component Patterns](references/04-component-patterns.md) | HIGH | 13 | Buttons, popover, tooltip, drawer, observer, stagger |
+| 02 | [Animation Timing & Easing](references/02-animation-timing.md) | CRITICAL | 10 | Duration tiers, easing selection, stagger, perceived speed |
+| 03 | [Spring Physics](references/03-spring-physics.md) | HIGH | 6 | Spring params, mouse tracking, interruptibility |
+| 04 | [Component Patterns](references/04-component-patterns.md) | HIGH | 17 | Buttons, popover, tooltip, drawer, observer, stagger |
 | 05 | [CSS Techniques](references/05-css-techniques.md) | HIGH | 31 | Transform, clip-path, pseudo, scroll-driven, View Transitions |
-| 06 | [Gesture Interaction](references/06-gesture-interaction.md) | HIGH | 8 | Momentum, damping, pointer capture, directional friction |
-| 07 | [Exit Animations](references/07-exit-animations.md) | HIGH | 14 | AnimatePresence, exit symmetry, modes, propagation |
+| 06 | [Gesture Interaction](references/06-gesture-interaction.md) | HIGH | 9 | Momentum, damping, pointer capture, directional friction |
+| 07 | [Exit Animations](references/07-exit-animations.md) | HIGH | 15 | AnimatePresence, exit symmetry, modes, propagation |
 
 ### Visual & Design Systems (08–10, 18–19, 23)
 
 | # | Category | Impact | Rules | Reference |
 |---|----------|--------|-------|-----------|
-| 08 | [Visual Design](references/08-visual-design.md) | HIGH | 10 | Shadows, radius, spacing, button anatomy |
-| 09 | [Typography](references/09-typography.md) | MEDIUM | 16 | Numeric format, OpenType, rendering, layout |
-| 10 | [Audio Feedback](references/10-audio-feedback.md) | MEDIUM | 30 | Sound design, Web Audio API, appropriateness |
+| 08 | [Visual Design](references/08-visual-design.md) | HIGH | 9 | Shadows, radius, spacing, button anatomy |
+| 09 | [Typography](references/09-typography.md) | MEDIUM | 17 | Numeric format, OpenType, rendering, layout |
+| 10 | [Audio Feedback](references/10-audio-feedback.md) | MEDIUM | 27 | Sound design, Web Audio API, appropriateness |
 | 18 | [Color & Theming](references/18-color-theming.md) | CRITICAL | 12 | OKLCH, semantic colors, dark mode, contrast, light-dark() |
-| 19 | [Design Tokens](references/19-design-tokens.md) | HIGH | 6 | CSS variable architecture, shadow palette, token schema |
+| 19 | [Design Tokens](references/19-design-tokens.md) | HIGH | 9 | CSS variable architecture, shadow palette, token schema |
 | 23 | [Distinctive Design](references/23-distinctive-design.md) | CRITICAL | 9 | Anti-AI-slop: font/palette/scaffold/glassmorphism tells |
 
 ### Layout & Structure (16–17, 21)
 
 | # | Category | Impact | Rules | Reference |
 |---|----------|--------|-------|-----------|
-| 16 | [Layout Systems](references/16-layout-systems.md) | CRITICAL | 13 | Grid, Flexbox, container queries, layout primitives |
-| 17 | [Dialog & Overlay Patterns](references/17-dialog-overlay-patterns.md) | CRITICAL | 12 | Native dialog, popover API, anchor positioning, drawer |
-| 21 | [Form Patterns](references/21-form-patterns.md) | HIGH | 6 | Custom inputs, validation states, aria-disabled |
+| 16 | [Layout Systems](references/16-layout-systems.md) | CRITICAL | 14 | Grid, Flexbox, container queries, layout primitives |
+| 17 | [Dialog & Overlay Patterns](references/17-dialog-overlay-patterns.md) | CRITICAL | 15 | Native dialog, popover API, anchor positioning, drawer |
+| 21 | [Form Patterns](references/21-form-patterns.md) | HIGH | 7 | Custom inputs, validation states, aria-disabled |
 
 ### UX, Performance & Accessibility (11–15, 20)
 
 | # | Category | Impact | Rules | Reference |
 |---|----------|--------|-------|-----------|
 | 11 | [Laws of UX](references/11-laws-of-ux.md) | HIGH | 23 | Fitts, Hick, Miller, Doherty, Gestalt, cognitive load |
-| 12 | [Performance](references/12-performance.md) | HIGH | 8 | GPU acceleration, CSS vs JS, WAAPI, blur limits |
+| 12 | [Performance](references/12-performance.md) | HIGH | 13 | GPU acceleration, CSS vs JS, WAAPI, blur limits |
 | 13 | [Prefetching](references/13-prefetching.md) | MEDIUM | 6 | Trajectory prediction, hitSlop, touch fallback |
 | 14 | [Accessibility](references/14-accessibility.md) | HIGH | 8 | Reduced motion, rem units, focus-visible, target sizes |
 | 15 | [Review Methodology & Checklist](references/15-review-checklist.md) | HIGH | — | Reviewer posture, 10 non-negotiable standards, escalation triggers, remedial hierarchy, Block/Approve verdict, checklist, debug |
-| 20 | [Keyboard & State Matrix](references/20-keyboard-state-matrix.md) | CRITICAL | 10 | Roving tabindex, focus-visible, SPA route focus, skip link, ARIA |
+| 20 | [Keyboard & State Matrix](references/20-keyboard-state-matrix.md) | CRITICAL | 12 | Roving tabindex, focus-visible, SPA route focus, skip link, ARIA |
 
 ### State & AI Interfaces (24–25)
 
@@ -93,13 +95,14 @@ Three beliefs that govern every rule in this system:
 | 24 | [State Design](references/24-state-design.md) | HIGH | 7 | Loading/empty/error/pending, skeleton vs spinner, optimistic limits |
 | 25 | [AI & Streaming](references/25-ai-streaming.md) | HIGH | 7 | Streaming a11y, stop control, reasoning traces, provisional content |
 
-**Total: ~290 rules across 24 categories**
+**Total: ~300 rules across 24 categories**
 
 ### Appendix (reference — not counted as rules)
 
 | # | Category | Type | Reference |
 |---|----------|------|-----------|
 | 22 | [Animation Vocabulary](references/22-animation-vocabulary.md) | REFERENCE | Reverse-lookup glossary: vague description → precise term → the category that governs it |
+| 26 | [Motion Spec](references/26-motion-spec.md) | REFERENCE | Per-component values (tool, properties, easing, enter/exit duration, origin) to copy instead of approximating |
 
 ---
 
@@ -107,7 +110,7 @@ Three beliefs that govern every rule in this system:
 
 | Standard | Value | Rule |
 |----------|-------|------|
-| Max animation duration | **300ms** | timing-300ms-cap |
+| Max animation duration | **300ms** (drawer/sheet 500ms · toast 400ms) | timing-300ms-cap |
 | :active scale | **0.97** | component-active-scale |
 | Min entry scale | **0.95** | component-no-scale-zero |
 | Default spring | `duration: 0.4, bounce: 0.15` | spring-apple-style-default |
@@ -116,7 +119,7 @@ Three beliefs that govern every rule in this system:
 | Stagger cap | ≤60ms/item (1-5), ≤40ms (6+) | timing-stagger-adaptive |
 | Total stagger limit | **400ms** | timing-stagger-adaptive |
 | Interactive target size | **24px** floor (WCAG 2.2 AA) · 44–48px touch | a11y-target-size-24 |
-| Keyboard animation | **0ms** (none) | Decision Framework, Step 1 |
+| High-frequency keyboard animation | **0ms** (shortcuts, command palette, focus moves) | Decision Framework, Step 1 |
 | Exit/entrance ratio | **~60%** (exit is faster) | exit-timing-asymmetric |
 | Max blur | **20px** | perf-blur-limit |
 | Response thresholds | 100ms feedback · **200ms** INP · 1s/10s indicators | ux-doherty-response-thresholds |
@@ -143,17 +146,22 @@ Three beliefs that govern every rule in this system:
 |------|-------|---------|
 | Micro | 60–120ms | Color change, opacity, focus ring |
 | Short | 120–200ms | Button press, hover, tooltip, toggle |
-| Medium | 200–300ms | Modal, dropdown, slide panel |
-| Decorative | 300–500ms | Drawer, page transition (non-blocking) |
+| Medium | 200–300ms | Modal, slide panel |
+| Decorative | 300–500ms | Drawer/sheet (≤500ms), toast (≤400ms), page transition (non-blocking) |
+
+Dropdown and popover take a per-component value, **150–250ms**: see [26-Motion Spec](references/26-motion-spec.md).
 
 ---
 
 ## How to Use This Skill
 
-**Start at [00-Diagnosis Map](references/00-diagnosis-map.md)** — symptom → rule → fix. Three workflows:
+**Start at [00-Diagnosis Map](references/00-diagnosis-map.md)** — symptom → rule → fix. Six workflows:
 - **Audit** existing code/diff → findings table + Block/Approve verdict (methodology: [15](references/15-review-checklist.md))
 - **Fix** → apply the remedial hierarchy (delete > reduce > … > polish) from the map
 - **Design new** → load [23-distinctive-design](references/23-distinctive-design.md) + tokens first, so output isn't slop by construction
+- **Find motion** ("what could animate here?", "make it feel more alive") → [workflows/find-motion.md](workflows/find-motion.md): read-only sweep, hard gate, suggestions plus rejected candidates
+- **Animate** an existing component → [workflows/animate.md](workflows/animate.md): gate first (zero lines can be the right answer), then tool, properties, curve, duration from [26](references/26-motion-spec.md)
+- **Plan** a whole codebase or a hand-off → [workflows/plan.md](workflows/plan.md): read-only survey, writes self-contained plans into `plans/` only
 
 ### When fixing broken UI (audit → fix):
 1. [00-Diagnosis Map](references/00-diagnosis-map.md) — match the symptom, get the rule-ids

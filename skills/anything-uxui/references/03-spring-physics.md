@@ -110,6 +110,7 @@ This makes spring ideal for gestures where users can change direction mid-animat
 }
 
 // ✅ Spring: smooth reversal from current position
+// The `x` shorthand is fine here (single gesture-driven element, not a busy screen); reach for the full transform string only under load (→ `perf-motion-hw`)
 <motion.div
   animate={{ x: isOpen ? 200 : 0 }}
   transition={{ type: "spring", stiffness: 400, damping: 25 }}
